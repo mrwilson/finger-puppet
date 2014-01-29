@@ -1,0 +1,22 @@
+#!/bin/bash
+
+export HOME=/var/tmp
+export FACTER_FQDN=$(uname -n)
+export FACTER_IPADDRESS=127.0.0.1
+
+for SERF_VAR in SERF_EVENT SERF_SELF_NAME; do
+  export FACTER_${SERF_VAR}=$(printenv ${SERF_VAR})
+done
+
+PUPPET=$(which puppet)
+
+read -t 3 INPUT
+
+export FACTER_INPUT=${INPUT}
+
+if [ $? -eq 0 ]; then
+  $PUPPET apply $*
+else
+  echo "Cannot find puppet executable, exiting"
+  exit 1
+fi
