@@ -4,19 +4,20 @@ export HOME=/var/tmp
 export FACTER_FQDN=$(uname -n)
 export FACTER_IPADDRESS=127.0.0.1
 
-for SERF_VAR in SERF_EVENT SERF_SELF_NAME; do
-  export FACTER_${SERF_VAR}=$(printenv ${SERF_VAR})
-done
-
 PUPPET=$(which puppet)
+FPFILE=$1
 
-read -t 3 INPUT
-
-export FACTER_INPUT=${INPUT}
+if [ $# -eq 1 ]; then
+  read -t 3 INPUT
+  export FACTER_INPUT=${INPUT}
+else
+  shift
+  export FACTER_INPUT=$*
+fi
 
 if [ $? -eq 0 ]; then
-  $PUPPET apply $*
+  ${PUPPET} apply ${FPFILE}
 else
-  echo "Cannot find puppet executable, exiting"
+  echo "Cannot find puppet executable, exiting."
   exit 1
 fi
