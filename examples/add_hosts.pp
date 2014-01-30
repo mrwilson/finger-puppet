@@ -1,12 +1,8 @@
 #!/usr/bin/finger-puppet
 
-/*
-
-  Add entry to /etc/hosts if it doesn't exist
-
-  Usage: echo "<hostname> <ip>" | ./add_hosts.pp
-
-*/
+#  Add entry to /etc/hosts if it doesn't exist
+#
+#  Usage: ./add_hosts.pp <hostname> <ip>
 
 $host = split($::input, '\s')
 
