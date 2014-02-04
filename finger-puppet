@@ -5,7 +5,7 @@ export FACTER_FQDN=$(uname -n)
 export FACTER_IPADDRESS=127.0.0.1
 
 PUPPET=$(which puppet)
-PFLAGS="--modulepath=/etc/puppet/modules"
+PFLAGS="--modulepath=/etc/puppet/modules --parser future"
 FPFILE=$1
 
 if [ $# -eq 1 ]; then
